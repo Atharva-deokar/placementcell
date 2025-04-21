@@ -175,9 +175,6 @@
             {% if user.is_staff %}
                 <a href="{% url 'add_student' %}" class="btn btn-warning">➕ Add Student</a>
             {% endif %}
-            {% if user.is_staff %}
-            <a href="{% url 'upload_resume' %}" class="btn btn-warning">📤 Upload Resume</a>
-            {% endif %}
             <a href="{% url 'logout' %}" class="btn btn-danger">🚪 Logout</a>
         </nav>
     </header>

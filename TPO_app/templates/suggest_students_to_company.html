@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggested Students for Companies</title>
+    <style>
+        /* Dark mode & modern styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 900px;
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff4081;
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .company-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #292929, #1e1e1e);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .company-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .company-title {
+            font-size: 22px;
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .student-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .student-item {
+            background: #2a2a2a;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .student-item:hover {
+            background: #3a3a3a;
+            transform: translateX(5px);
+        }
+
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .student-info strong {
+            color: #ffcc00;
+        }
+
+        .company-section p {
+            margin: 5px 0;
+            color: #bdbdbd;
+        }
+
+        /* Buttons */
+        .action-button {
+            display: inline-block;
+            margin: 20px 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+            text-align: center;
+        }
+
+        .download-button {
+            background: #4CAF50;
+        }
+
+        .download-button:hover {
+            background: #388E3C;
+            transform: scale(1.05);
+        }
+
+        .back-button {
+            background: #ff4081;
+        }
+
+        .back-button:hover {
+            background: #e040fb;
+            transform: scale(1.05);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .student-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Suggested Students for Companies</h1>
+
+    <!-- Download Excel Button (Visible only to Admins) -->
+    {% if user.is_staff %}
+    <div class="button-container">
+        <a href="{% url 'download_suggested_students_excel' %}" class="action-button download-button">
+            📥 Download Excel
+        </a>
+    </div>
+    {% endif %}
+
+    {% for company, students in company_suggestions.items %}
+        <div class="company-section">
+            <h2 class="company-title">{{ company.name }}</h2>
+            <p><strong>Skills Required:</strong> {{ company.skills_required }}</p>
+            <p><strong>Open Positions:</strong> {{ company.number_of_posts }}</p>
+
+            {% if students %}
+                <ul class="student-list">
+                    {% for student in students %}
+                        <li class="student-item">
+                            <div class="student-info">
+                                <span><strong>Name:</strong> {{ student.name }}</span>
+                                <span><strong>Email:</strong> {{ student.email }}</span>
+                            </div>
+                            <div class="student-info">
+                                <span><strong>Skills:</strong> {{ student.skills }}</span>
+                                <span><strong>CGPA:</strong> {{ student.cgpa }}</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No matching students found.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Back Button -->
+<div class="button-container">
+    <a href="javascript:history.back()" class="action-button back-button">⬅ Back</a>
+</div>
+
+</body>
+</html>

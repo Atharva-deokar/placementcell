@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Matching Companies</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 50px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            color: #f1c40f;
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            outline: none;
+        }
+        input {
+            background: #2c3e50;
+            color: #ecf0f1;
+        }
+        input:focus {
+            background: #34495e;
+        }
+        button {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(45deg, #229954, #27ae60);
+            transform: scale(1.05);
+        }
+        .company-card {
+            background: #2c3e50;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(52, 152, 219, 0.4);
+        }
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+        .back-button:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🏢 Find Your Perfect Company</h1>
+    <p>Enter your skills (comma-separated) to find matching companies:</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="student_skills" placeholder="Enter skills (e.g., Python, Machine Learning, Java)" required>
+        <button type="submit">🔍 Find Companies</button>
+    </form>
+
+    {% if shortlisted_companies %}
+        <h2>✅ Top 3 Matching Companies:</h2>
+        {% for company in shortlisted_companies %}
+            <div class="company-card">
+                <h3>{{ company.name }}</h3>
+                <p><strong>Skills Required:</strong> {{ company.required_skills }}</p>
+                <p><strong>Open Positions:</strong> {{ company.num_posts }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        {% if request.method == "POST" %}
+            <p>No matching companies found.</p>
+        {% endif %}
+    {% endif %}
+
+    <a href="{% url 'index' %}" class="back-button">🏠 Back to Home</a>
+</div>
+
+</body>
+</html>

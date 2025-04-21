@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggested Companies</title>
+</head>
+<body style="background-color: #121212; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
+
+    <form method="POST" style="background-color: #1e1e1e; padding: 30px; border-radius: 12px; box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2); width: 80%; max-width: 700px; text-align: center;">
+        {% csrf_token %}
+        <h2 style="color: #1E90FF; margin-bottom: 20px;">Select a Student</h2>
+        <label for="student" style="font-weight: bold; font-size: 18px; color: #ddd; display: block; margin-bottom: 15px;">Choose Student:</label>
+        <select name="student_id" id="student" style="width: 100%; padding: 12px; border: 1px solid #555; border-radius: 10px; font-size: 18px; background-color: #2a2a2a; color: #fff; margin-bottom: 20px;">
+            {% for student in students %}
+            <option value="{{ student.id }}">{{ student.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" style="background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; width: 100%; transition: 0.3s;">
+            Suggest Companies
+        </button>
+    </form>
+
+    {% if selected_student %}
+        <h1 style="text-align: center; margin-top: 30px; color: #1E90FF; font-size: 32px;">Suggested Companies for {{ selected_student.name }}</h1>
+        
+        {% if companies %}
+            <div style="width: 90%; max-width: 1000px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px;">
+                {% for company in companies %}
+                    <div class="company-card" style="background-color: #222; padding: 20px; border-radius: 12px; box-shadow: 0px 6px 12px rgba(255, 255, 255, 0.1); width: 100%; max-width: 450px; text-align: center;">
+                        <h2 style="color: #1E90FF; font-size: 24px; margin-bottom: 10px;">{{ company.name }}</h2>
+                        <p style="color: #bbb; font-size: 18px; margin-bottom: 8px;"><strong>Skills Required:</strong> {{ company.required_skills }}</p>
+                        <p style="color: #bbb; font-size: 18px;"><strong>Open Positions:</strong> {{ company.num_posts }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="text-align: center; color: red; font-size: 20px; font-weight: bold; margin-top: 20px;">No matching companies found.</p>
+        {% endif %}
+    {% endif %}
+
+    <!-- Back to Home Button -->
+    <a href="/" style="margin-top: 30px; text-decoration: none;">
+        <button style="background-color: #FF4500; color: white; padding: 12px 20px; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; transition: 0.3s;">
+            ⬅ Back to Home
+        </button>
+    </a>
+
+</body>
+</html>

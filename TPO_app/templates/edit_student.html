@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% load static %}  <!-- Load static files at the top of the template -->
+
+{% block content %}
+    <div style="
+        background: rgba(25, 25, 25, 0.9);
+        backdrop-filter: blur(12px);
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        max-width: 700px;
+        margin: 50px auto;
+        font-family: 'Inter', sans-serif;
+        color: #f5f5f5;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    ">
+        <h1 style="
+            color: #00c6ff;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        ">
+            Edit Student Details - {{ student.name }}
+        </h1>
+
+        <!-- Display Form Errors -->
+        {% if form.errors %}
+            <div style="
+                background-color: rgba(255, 77, 77, 0.9);
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                text-align: center;
+                margin-bottom: 1.5rem;
+                font-weight: bold;
+            ">
+                <strong>There were some errors in your form:</strong>
+                <ul style="list-style-type: none; padding: 0;">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ field|title }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <!-- Student Edit Form -->
+        <form method="POST" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+            {% csrf_token %}
+            
+            <div style="width: 48%; margin-bottom: 1.5rem;">
+                <label style="
+                    color: #00c6ff;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-size: 1rem;
+                ">Name</label>
+                <div>{{ form.name }}</div>
+            </div>
+
+            <div style="width: 48%; margin-bottom: 1.5rem;">
+                <label style="
+                    color: #00c6ff;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-size: 1rem;
+                ">Email</label>
+                <div>{{ form.email }}</div>
+            </div>
+
+            <div style="width: 48%; margin-bottom: 1.5rem;">
+                <label style="
+                    color: #00c6ff;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-size: 1rem;
+                ">Phone Number</label>
+                <div>{{ form.phone_number }}</div>
+            </div>
+
+            <div style="width: 48%; margin-bottom: 1.5rem;">
+                <label style="
+                    color: #00c6ff;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-size: 1rem;
+                ">Skills</label>
+                <div>{{ form.skills }}</div>
+            </div>
+
+            <div style="width: 48%; margin-bottom: 1.5rem;">
+                <label style="
+                    color: #00c6ff;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-size: 1rem;
+                ">Experience</label>
+                <div>{{ form.experience }}</div>
+            </div>
+
+            <div style="width: 48%; margin-bottom: 1.5rem;">
+                <label style="
+                    color: #00c6ff;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-size: 1rem;
+                ">CGPA</label>
+                <div>{{ form.cgpa }}</div>
+            </div>
+
+            <div style="width: 100%; margin-bottom: 1.5rem;">
+                <label style="
+                    color: #00c6ff;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-size: 1rem;
+                ">Course Subdomain</label>
+                <div>{{ form.course_subdomain }}</div>
+            </div>
+
+            <div style="width: 100%; margin-top: 1rem;">
+                <button type="submit" style="
+                    background: linear-gradient(135deg, #00c6ff, #0072ff);
+                    color: white;
+                    font-weight: bold;
+                    font-size: 1rem;
+                    border-radius: 10px;
+                    padding: 0.8rem;
+                    width: 100%;
+                    border: none;
+                    cursor: pointer;
+                    transition: 0.3s ease-in-out;
+                    box-shadow: 0 6px 20px rgba(0, 198, 255, 0.4);
+                ">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+
+        <a href="{% url 'students_list' %}" style="display: block; margin-top: 1.5rem;">
+            <button style="
+                background: linear-gradient(135deg, #0072ff, #00c6ff);
+                color: white;
+                padding: 0.75rem 1.5rem;
+                width: 100%;
+                border-radius: 5px;
+                border: none;
+                cursor: pointer;
+                transition: 0.3s;
+                box-shadow: 0 6px 20px rgba(0, 198, 255, 0.4);
+            ">
+                Back to Student List
+            </button>
+        </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,249 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <title>{% block title %}Home{% endblock %}</title>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'css/top.css' %}" rel="stylesheet">
+    <link href="{% static 'css/footer.css' %}" rel="stylesheet">
+    <link href="{% static 'css/chat.css' %}" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-color: #1E1E2E;
+        color: #FFFFFF;
+        font-family: 'Inter', sans-serif;
+    }
+    .hero {
+        background: linear-gradient(135deg, #6900FF, #B400FF);
+        color: white;
+    }
+    .custom-button {
+        background: linear-gradient(135deg, #FF6A00, #EE0979);
+        border: none;
+        border-radius: 10px;
+        padding: 12px 24px;
+        transition: 0.3s ease-in-out;
+    }
+    .custom-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(255, 106, 0, 0.4);
+    }
+    .chat-button {
+            background: linear-gradient(135deg, #F8F9FA, #E0E0E0);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            transition: 0.3s ease-in-out;
+        }
+        .chat-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(200, 200, 200, 0.4);
+        }
+</style>
+
+<body>
+    {% include 'includes/navbar.html' %}
+    <!-- HOME PAGE STARTS -->
+    <section class="hero is-small is-bold" style="background-color:#2C2C2C" id="about">
+        <!-- Dark grey background for the hero section -->
+    </section>
+    <div class="container">
+        {% block content %}
+        <div class="tile is-ancestor">
+            <div class="tile is-vertical is-7">
+                <div class="tile is-parent">
+                    <article class="tile is-child">
+                        <div class="content">
+                            <figure class="image is-4by3">
+                                <img src="{% static 'images/home.svg'%}">
+                            </figure>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="tile is-vertical is-5">
+                <article class="tile is-child mx-3">
+                    <div class="content mt-6"><br><br><br><br>
+                        <h1 class=" mx-5 mt-4 has-text-bold" style="color: rgb(252, 248, 248);" >WELCOME</h1>
+                        <div class="content mx-5">
+                            <p class="has-text-justified">The PCCOE Pune Placement Cell plays a vital role in connecting Undergraduates and Postgraduates with job opportunities by maintaining strong relationships with reputed companies and industrial establishments. The Placement Cell works throughout the year to facilitate interactions between companies and graduates, ensuring that students have access to valuable career opportunities. The number of students successfully placed through campus recruitment drives is consistently increasing, reflecting the growing success of the placement efforts at PCCOE Pune. </p>
+                            <a href="#about">
+                                <button class="button is-light custom-button" style="background-color: #6900FF; color: white;">
+                                    <strong><i class="fas fa-arrow-circle-down"></i> Lets Start</strong>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        {% include 'includes/messages.html' %}
+    </div>
+    <!-- HOME PAGE ENDS -->
+    <br><br><br>
+    <!-- SECTION STARTS -->
+    <section class="hero is-small is-bold" style="background-color:#F7F7F7" id="about">
+        <div class="hero-body">
+            <div class="container">
+                <div class="tile is-ancestor">
+                    <div class="tile is-6 is-vertical is-parent">
+                        <article class="tile is-child box">
+                            <div class="content">
+                                <figure class="image is-4by3">
+                                    <img src="{% static 'images/records.png'%}">
+                                </figure>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <div class="tile is-child ">
+                            <h1 class="title mt-6">OBJECTIVES</h1>
+                            <ul>
+                                <li><b>1.</b> Developing the students to meet the Industries recruitment process</li>
+                                <br>
+                                <li><b>2.</b> To motivate students to develop Technical knowledge and soft skills in terms of career planning, goal setting</li><br>
+                                <li><b>3.</b> To motivate students aspire for higher studies and guiding them to take competitive exams such as CAT, GATE, TOEFL, GRE, IES, UPSC, TNPSC etc</li><br>
+                                <li><b>4.</b> Aiming to Place the maximum number of students through campus & off-campus interviews conducted by the top companies</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- SECTION ENDS -->
+    <!-- UPCOMING EVENTS STARTS -->
+    <div class="container" >
+        {% if user.is_authenticated %}
+        {% include 'includes/Events_login.html' %}
+        {% else %}
+        {% include 'includes/Events_not_login.html'%}
+        {% endif %}
+    </div>
+    <!-- UPCOMING EVENT ENDS -->
+    <br>
+    <!-- COMPANIES STARTS -->
+
+    <!-- COMPANIES ENDS -->
+    <div class="container" id="stats">
+        <br><br>
+        <!-- TOTAL PLACED -->
+        <div class="box">
+            <p class="title has-text-centered">Highlights</p><br>   
+            <section class="level">
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading is-size-6">Companies Visiting</p>
+                        <p class="title" id="num" data-count="84">0</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading is-size-6">Highest Package(LPA)</p>
+                        <p class="title" id="num" data-count="18.5">0</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading is-size-6">Average Package(LPA)</p>
+                        <p class="title" data-count="8">0</p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <div>
+                        <p class="heading is-size-6">Highest Placements(+)</p>
+                        <p class="title" data-count="600">0</p>
+                    </div>
+                </div>
+            </section>
+        </div><br>
+        {% endblock %}
+        <a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
+
+        <button class="open-button is-size-5 custom-chat-button" onclick="openForm()" style="background-color: white; color: black;">
+            <strong><i class="fas fa-comment-alt"></i> Chat</strong>
+        </button>
+
+        <div class="chat-popup" id="myForm">
+            <form class="form-container">
+                <iframe style="border: none;border-radius: 5px;" width="280" height="390" allow="microphone;"
+                    src="https://console.dialogflow.com/api-client/demo/embedded/7dec0910-2f92-4902-849c-5c6f90718781">
+                </iframe>
+
+                <button type="button" class="button cancel is-fullwidth custom-chat-button" onclick="closeForm()">
+                    <strong>Close</strong>
+                </button>
+            </form>
+        </div>
+        <p class="footer-heart">
+            Designed by <a href="https://www.pccoepune.com/" target="_blank" style="color: rgb(252, 248, 248);" rel="noopener noreferrer">PCCOE</a>
+        </p><br>
+    </div>
+    <!-- JS FILES -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="{% static 'js/tabs.js' %}"></script>
+    <script>
+        // ===== Scroll to Top ==== 
+        $(window).scroll(function () {
+            if ($(this).scrollTop() >= 50) {        
+                $('#return-to-top').fadeIn(200);    
+            } else {
+                $('#return-to-top').fadeOut(200);   
+            }
+        });
+        $('#return-to-top').click(function () {      
+            $('body,html').animate({
+                scrollTop: 0                       
+            }, 500);
+        });
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+        $("#button").click(function () {
+            $('html, body').animate({
+                scrollTop: $("#about").offset().top
+            }, 1000);
+        });
+        $("#button1").click(function () {
+            $('html, body').animate({
+                scrollTop: $("#events").offset().top
+            }, 1000);
+        });
+        // Animate counter
+        $(document).ready(function () {
+            $('#num').each(function () {
+                var $this = $(this);
+                var countTo = $this.attr('data-count');
+                $({ countNum: $this.text() }).animate(
+                    { countNum: countTo },
+                    {
+                        duration: 2000,
+                        easing: 'swing',
+                        step: function () {
+                            $this.text(Math.floor(this.countNum));
+                        },
+                        complete: function () {
+                            $this.text(this.countNum);
+                        },
+                    }
+                );
+            });
+        });
+    </script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="{% static 'js/counter.js' %}"></script>
+</body>
+</html>

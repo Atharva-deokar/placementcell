@@ -1,0 +1,137 @@
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <img src="http://127.0.0.1:8000/static/images/code.jpg" width="80" height="600" />
+      </a>
+  
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div class="navbar-start">
+        <a class="navbar-item" href="/">
+          <strong>Home</strong>
+        </a>
+        <a class="navbar-item" href="/#about">
+          <strong>Objectives</strong>
+        </a>
+        <a class="navbar-item" href="/#events">
+          <strong>Events</strong>
+        </a>
+        <a class="navbar-item" href="/top-skills">
+          <strong>Top Skills</strong>
+        </a>
+  
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons is-flex is-flex-wrap-wrap is-justify-content-end">
+  
+            {% if user.is_authenticated %}
+  
+              <!-- Get Company Button -->
+              <!-- Get Company Button -->
+             <a href="{% url 'get_company' %}" style="margin: 5px;">
+              <button class="button is-small custom-button" style="background-color: #007BFF; color: white;">
+                <i class="fas fa-building"></i> Get Company
+                </button>
+                </a>
+  
+  
+              {% if user.is_staff %}
+                <!-- Admin ML Dropdown -->
+                <!-- Analyze with ML Dropdown -->
+                <div class="dropdown is-hoverable" style="margin: 5px;">
+                  <div class="dropdown-trigger">
+                    <button class="button is-small custom-button" style="background-color: #FF5733; color: white;" aria-haspopup="true" aria-controls="dropdown-menu">
+                      <strong><i class="fas fa-cogs"></i> Analyze</strong>
+                    </button>
+                  </div>
+                  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                      <a href="{% url 'cluster_students' %}" class="dropdown-item">Cluster Students</a>
+                      <a href="{% url 'suggest_students_to_company' %}" class="dropdown-item">Suggest to Company</a>
+                      <a href="{% url 'suggest_companies' %}" class="dropdown-item">Suggest Companies</a>
+                      <a href="{% url 'predict_recruitment' %}" class="dropdown-item">Forecast Trends</a>
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- Other Admin Buttons -->
+                <a href="{% url 'add_company_ml' %}" style="margin: 5px;">
+                  <button class="button is-small custom-button" style="background-color: #007BFF; color: white;">
+                    <i class="fas fa-plus"></i> Add Company
+                  </button>
+                </a>
+              
+                <a href="{% url 'add_student' %}" style="margin: 5px;">
+                  <button class="button is-small custom-button" style="background-color: #007BFF; color: white;">
+                    <i class="fas fa-plus"></i> Add Student
+                  </button>
+                </a>
+              
+                <a href="{% url 'upload_resume' %}" style="margin: 5px;">
+                  <button class="button is-small custom-button" style="background-color: #007BFF; color: white;">
+                    <i class="fas fa-upload"></i> Upload Resume
+                  </button>
+                </a>
+              {% endif %}
+  
+              <!-- Username and Logout -->
+              <a class="button is-primary is-light" href="/">
+                <strong><i class="fa fa-user"></i> {{ user.username }}</strong>
+              </a>
+              <a class="button is-danger is-light" href="/logout">
+                <strong>Log out</strong>
+              </a>
+  
+            {% else %}
+  
+              <!-- Sign up/Login (for non-authenticated users) -->
+              <a class="button is-success is-light" href="/register">
+                <strong>Sign up</strong>
+              </a>
+              <a class="button is-light is-danger" href="/login">
+                <strong>Log in</strong>
+              </a>
+  
+            {% endif %}
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- FontAwesome for Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  
+  <!-- Burger Toggle Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const burger = document.querySelector('.navbar-burger');
+      const menu = document.querySelector('.navbar-menu');
+  
+      burger.addEventListener('click', () => {
+        burger.classList.toggle('is-active');
+        menu.classList.toggle('is-active');
+      });
+    });
+  </script>
+  
+  <!-- Extra CSS for Responsiveness -->
+  <style>
+    .navbar {
+      flex-wrap: wrap;
+    }
+    .navbar-menu {
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    .navbar-item strong {
+      white-space: nowrap;
+    }
+  </style>
+  

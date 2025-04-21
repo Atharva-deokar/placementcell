@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 style="
+    text-align: center; 
+    font-size: 32px; 
+    color: #f1c40f; 
+    margin-bottom: 20px; 
+    font-weight: bold; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 10px rgba(241, 196, 15, 0.7);
+">
+    📋 Company List
+</h2>
+
+<div style="text-align: center; margin-bottom: 20px;">
+    <a href="{% url 'index' %}" class="nav-btn">🏠 Home</a>
+    <a href="{% url 'add_company_ml' %}" class="nav-btn">➕ Add Company</a>
+</div>
+
+{% if companies %}
+<div class="table-container">
+    <table class="company-table">
+        <thead>
+            <tr>
+                <th>📛 Name</th>
+                <th>🛠 Required Skills</th>
+                <th>📌 Job Openings</th>
+                <th>📊 1 Yr Ago</th>
+                <th>📊 2 Yr Ago</th>
+                <th>📊 3 Yr Ago</th>
+                <th>📊 4 Yr Ago</th>
+                <th>📊 5 Yr Ago</th>
+                <th>⚙ Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for company in companies %}
+            <tr>
+                <td class="company-name">{{ company.name }}</td>
+                <td>{{ company.required_skills }}</td>
+                <td>{{ company.num_posts }}</td>
+                <td>{{ company.prev_yr_1 }}</td>
+                <td>{{ company.prev_yr_2 }}</td>
+                <td>{{ company.prev_yr_3 }}</td>
+                <td>{{ company.prev_yr_4 }}</td>
+                <td>{{ company.prev_yr_5 }}</td>
+                <td class="action-buttons">
+                    <a href="{% url 'edit_company' company.id %}" class="edit-btn">✏️ Edit</a>
+                    <a href="{% url 'delete_company' company.id %}" class="delete-btn" onclick="return confirm('Are you sure?')">🗑️ Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p class="no-data">🚀 No companies added yet.</p>
+{% endif %}
+
+<style>
+    /* Button Styling */
+    .nav-btn {
+        text-decoration: none;
+        font-size: 16px;
+        color: white;
+        background: linear-gradient(45deg, #2ecc71, #27ae60);
+        padding: 12px 18px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: 0.3s;
+        margin: 5px;
+        box-shadow: 0px 4px 10px rgba(46, 204, 113, 0.4);
+        display: inline-block;
+    }
+    .nav-btn:hover {
+        transform: scale(1.05);
+    }
+
+    /* Table Styling */
+    .table-container {
+        width: 100%;
+        overflow-x: auto; /* Ensure table fits within smaller screens */
+    }
+    .company-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
+        background: #1e1e1e;
+        color: #ecf0f1;
+    }
+    .company-table th, .company-table td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #444;
+    }
+    .company-table th {
+        background: linear-gradient(90deg, #145a32, #1e8449);
+        color: white;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .company-table tbody tr:nth-child(odd) {
+        background-color: #2c3e50;
+    }
+    .company-table tbody tr:nth-child(even) {
+        background-color: #34495e;
+    }
+    .company-table tbody tr:hover {
+        background-color: #1abc9c;
+        color: white;
+        transition: 0.3s;
+    }
+
+    /* Ensuring Company Name is Always White */
+    .company-name {
+        font-weight: bold;
+        color: white !important;
+    }
+
+    /* Action Buttons */
+    .action-buttons a {
+        text-decoration: none;
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-weight: bold;
+        display: inline-block;
+        transition: 0.3s;
+    }
+    .edit-btn {
+        background: linear-gradient(45deg, #229954, #28b463);
+        color: white;
+        box-shadow: 0px 4px 8px rgba(34, 153, 84, 0.5);
+    }
+    .edit-btn:hover {
+        transform: scale(1.1);
+    }
+    .delete-btn {
+        background: linear-gradient(45deg, #c0392b, #e74c3c);
+        color: white;
+        box-shadow: 0px 4px 8px rgba(192, 57, 43, 0.5);
+        margin-left: 5px;
+    }
+    .delete-btn:hover {
+        transform: scale(1.1);
+    }
+
+    /* No Data Message */
+    .no-data {
+        text-align: center;
+        font-size: 18px;
+        color: #bdc3c7;
+        margin-top: 20px;
+        font-style: italic;
+    }
+
+    /* Responsive Table */
+    @media screen and (max-width: 768px) {
+        .company-table th, .company-table td {
+            padding: 10px;
+            font-size: 14px;
+        }
+        .nav-btn {
+            font-size: 14px;
+            padding: 10px 14px;
+        }
+    }
+</style>
+
+{% endblock %}

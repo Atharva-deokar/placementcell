@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>jQuery Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <p id="text">Hello, World!</p>
+    <button id="btn">Click Me</button>
+
+    <script>
+        $(document).ready(function(){
+            $("#btn").click(function(){
+                $("#text").text("Hello, jQuery!");
+            });
+        });
+    </script>
+</body>
+</html>

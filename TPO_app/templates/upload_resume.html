@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Resume</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+</head>
+<body style="background-color: #f9f9f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+<!-- Header Section -->
+<header style="background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;">
+    <h1 style="font-size: 1.5rem; font-weight: 600;">📜 Upload Resume</h1>
+    <nav style="display: flex; gap: 1rem;">
+        <a href="{% url 'index' %}" style="color: #3273dc; font-weight: 500; text-decoration: none;">🏠 Home</a>
+    </nav>
+</header>
+
+<!-- Upload Section -->
+<section class="section" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div class="box" style="width: 100%; max-width: 600px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 16px;">
+        <h2 class="title" style="text-align: center; color: #363636; font-size: 2rem;">Upload Resume</h2>
+
+        {% if error %}
+            <div class="notification is-danger" style="border-radius: 12px;">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="field">
+                <label class="label" style="font-weight: 600;">Resume (PDF)</label>
+                <div class="control">
+                    <input class="input" type="file" name="resume" required style="border-radius: 8px; padding: 12px;">
+                </div>
+            </div>
+
+            <div class="field is-grouped" style="margin-top: 24px; justify-content: center;">
+                <div class="control">
+                    <button class="button is-info" type="submit" name="preview_details" style="border-radius: 8px; font-weight: bold; min-width: 150px;">
+                        Preview Details
+                    </button>
+                </div>
+                <div class="control">
+                    <a href="{% url 'index' %}" class="button is-light" style="border-radius: 8px; font-weight: bold; min-width: 150px;">
+                        Home
+                    </a>
+                </div>
+            </div>
+        </form>
+
+        {% if extracted_data %}
+        <hr>
+        <h3 class="title is-4" style="text-align: center; color: #363636;">Extracted Details</h3>
+        <table class="table is-fullwidth" style="margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>phone_number</th>
+                    <th>Skills</th>
+                    <th>Experience</th>
+                    <th>CGPA</th>
+                    <th>Course Subdomain</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ extracted_data.name }}</td>
+                    <td>{{ extracted_data.email }}</td>
+                    <td>{{ extracted_data.phone_number }}</td>
+                    <td>{{ extracted_data.skills }}</td>
+                    <td>{{ extracted_data.experience }}</td>
+                    <td>{{ extracted_data.cgpa }}</td>
+                    <td>{{ extracted_data.course_subdomain }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="field is-grouped" style="margin-top: 24px; justify-content: center;">
+            <div class="control">
+                <!-- Form to submit data and add to student list -->
+                <form method="POST" action="{% url 'add_student' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="name" value="{{ extracted_data.name }}">
+                    <input type="hidden" name="email" value="{{ extracted_data.email }}">
+                    <input type="hidden" name="phone_number" value="{{ extracted_data.phone_number }}">
+                    <input type="hidden" name="skills" value="{{ extracted_data.skills }}">
+                    <input type="hidden" name="experience" value="{{ extracted_data.experience }}">
+                    <input type="hidden" name="cgpa" value="{{ extracted_data.cgpa }}">
+                    <input type="hidden" name="course_subdomain" value="{{ extracted_data.course_subdomain }}">
+                    <button class="button is-success" type="submit" style="border-radius: 8px; font-weight: bold; min-width: 150px;">
+                        Add Student to List
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+</body>
+</html>

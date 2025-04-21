@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students Grouped by Cluster</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ecf0f1;
+            text-align: center;
+        }
+        .container {
+            margin: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            color: #f1c40f;
+            text-shadow: 2px 2px 8px rgba(241, 196, 15, 0.7);
+        }
+        .cluster-section {
+            margin-bottom: 30px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: 0.3s;
+            text-align: left;
+        }
+        .cluster-title {
+            font-size: 22px;
+            color: #2ecc71;
+            border-bottom: 2px solid #2ecc71;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        .student-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .student-item {
+            background: #2c3e50;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(52, 152, 219, 0.3);
+            transition: 0.3s;
+        }
+        .student-item:hover {
+            background: #34495e;
+            transform: scale(1.02);
+        }
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .student-info strong {
+            color: #f39c12;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(231, 76, 60, 0.4);
+            transition: 0.3s;
+        }
+        .back-button:hover {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📌 Students Grouped by Cluster</h1>
+
+    {% for cluster_name, students_list in students_by_cluster.items %}
+        <div class="cluster-section">
+            <h2 class="cluster-title">📂 {{ cluster_name }}</h2>
+            <ul class="student-list">
+                {% for student in students_list %}
+                    <li class="student-item">
+                        <div class="student-info">
+                            <span><strong>👤 Name:</strong> {{ student.name }}</span>
+                            <span><strong>🛠 Skills:</strong> {{ student.skills }}</span>
+                        </div>
+                        <div class="student-info">
+                            <span><strong>📧 Email:</strong> {{ student.email }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% empty %}
+        <p style="font-size: 18px; font-style: italic;">❌ No students found.</p>
+    {% endfor %}
+
+    <!-- Download Excel Button (Visible only to Admins) -->
+    {% if user.is_staff %}
+    <a href="{% url 'download_cluster_excel' %}" class="back-button" style="background: linear-gradient(45deg, #2ecc71, #27ae60);">
+        📥 Download Excel
+    </a>
+    {% endif %}
+
+    <a href="{% url 'index' %}" class="back-button">🏠 Back to Home</a>
+</div>
+
+</body>
+</html>
